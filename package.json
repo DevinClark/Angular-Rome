@@ -1,0 +1,22 @@
+{
+  "name": "angular-rome",
+  "version": "0.0.0",
+  "description": "An Angular directive for Rome, a dependency free datepicker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "angular",
+    "datepicker",
+    "directive",
+    "rome"
+  ],
+  "author": "Devin Clark <dclarkdesign@wdtinc.com> (http://devin-clark.com)",
+  "license": "Apache License 2.0",
+  "dependencies": {
+    "lodash.merge": "^2.4.1",
+    "moment": "^2.8.1",
+    "rome": "^1.1.2"
+  }
+}
