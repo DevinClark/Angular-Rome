@@ -121,6 +121,7 @@ rome_module.directive('rome', function romeDirective(romeDefaults) {
        * Hat tip to Ionic for this idea.
        */
       angular.forEach({
+        'id': attrs.id,
         'name': attrs.name,
         'disabled': attrs.disabled,
         'readonly': attrs.readonly,
