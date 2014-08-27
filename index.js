@@ -23,6 +23,57 @@ rome_module.directive('rome', function romeDirective(romeDefaults) {
     return (str) ? ((str == 'true') ? true : false) : true
   }
 
+  /**
+   * Validation
+   * Pass rome-* a the ng-model of a rome element
+   */
+  function rangeValidation(attrs, config) {
+    var romeValidator = attrs.romeBefore || attrs.romeBeforeEq || attrs.romeAfterEq || attrs.romeAfter;
+    if (romeValidator) {
+      var has_id = romeValidator.indexOf('#') === 0;
+      var matched_element;
+      var search_attr;
+      var rome_elements = document.getElementsByTagName('rome');
+      if (has_id) {
+        matched_element = angular.element(document.getElementById(romeValidator.substr(1))).find('input');
+      } else {
+        for (var i = 0; i < rome_elements.length; i++) {
+          if (rome_elements[i].getAttribute('ng-model') == romeValidator) {
+            matched_element = angular.element(rome_elements[i]).find('input');
+            break;
+          }
+        }
+      }
+
+      if (matched_element) {
+        if (attrs.romeBefore) {
+          config.dateValidator = rome.val.before(matched_element[0]);
+        } else if (attrs.romeBeforeEq) {
+          config.dateValidator = rome.val.beforeEq(matched_element[0]);
+        } else if (attrs.romeAfter) {
+          config.dateValidator = rome.val.after(matched_element[0]);
+        } else if (attrs.romeAfterEq) {
+          config.dateValidator = rome.val.afterEq(matched_element[0]);
+        }
+      } else {
+        throw new Error('Cannot find rome instance from that ng-model.');
+      }
+    } else {
+      config.dateValidator = Function.prototype;
+    }
+  }
+
+  // http://stackoverflow.com/a/2956980
+  function setIntervalX(callback, delay, repetitions) {
+    var x = 0;
+    var intervalID = window.setInterval(function () {
+      callback();
+      if (++x === repetitions) {
+        window.clearInterval(intervalID);
+      }
+    }, delay);
+  }
+
   return {
     restrict: 'AE',
     transclude: 'attributes',
@@ -56,41 +107,14 @@ rome_module.directive('rome', function romeDirective(romeDefaults) {
       });
 
       /**
-       * Validation
-       * Pass rome-* a the ng-model of a rome element
-       */
-      var romeValidator = attrs.romeBefore || attrs.romeBeforeEq || attrs.romeAfterEq || attrs.romeAfter;
-      if (romeValidator) {
-        var matched_element;
-        var rome_elements = document.getElementsByTagName('rome');
-        for (var i = 0; i < rome_elements.length; i++) {
-          if (rome_elements[i].getAttribute('ng-model') == romeValidator) {
-            matched_element = angular.element(rome_elements[i]).find('input');
-            break;
-          }
-        }
-
-        if (matched_element) {
-          if (attrs.romeBefore) {
-            config.dateValidator = rome.val.before(matched_element[0]);
-          } else if (attrs.romeBeforeEq) {
-            config.dateValidator = rome.val.beforeEq(matched_element[0]);
-          } else if (attrs.romeAfter) {
-            config.dateValidator = rome.val.after(matched_element[0]);
-          } else if (attrs.romeAfterEq) {
-            config.dateValidator = rome.val.afterEq(matched_element[0]);
-          }
-        } else {
-          throw new Error('Cannot find rome instance from that ng-model.');
-        }
-      } else {
-        config.dateValidator = Function.prototype;
-      }
-
-      /**
        * Initialize Rome with the merged config from above.
        */
       rome_instance = rome(input[0], config);
+
+      // Hack to ensure all other rome directives are loaded so range validation will find a matching element.
+      setIntervalX(function () {
+        rangeValidation(attrs, config);
+      }, 100, 2);
 
       /**
        * Input Attributes
@@ -133,7 +157,7 @@ rome_module.directive('rome', function romeDirective(romeDefaults) {
       scope.$watch('ngModel', function(value) {
         if (value) {
           rome_instance.setValue(value);
-          formatDate();
+          scope.formattedValue = rome_instance.getDateString(romeDefaults.viewFormat || attrs.viewFormat) || romeDefaults.labelValue;
         }
       }, true);
     }
