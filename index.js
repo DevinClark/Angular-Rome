@@ -93,10 +93,23 @@ rome_module.directive('rome', function romeDirective(romeDefaults) {
       rome_instance = rome(input[0], config);
 
       /**
-       * Scope Defaults
+       * Input Attributes
+       * Hat tip to Ionic for this idea.
        */
-      input.attr('readonly', attrs.ngReadOnly);
-      input.attr('disabled', attrs.ngDisabled);
+      angular.forEach({
+        'name': attrs.name,
+        'disabled': attrs.disabled,
+        'readonly': attrs.readonly,
+        'required': attrs.required,
+        'novalidate': attrs.novalidate,
+        'ng-value': attrs.ngValue,
+        'ng-disabled': attrs.ngDisabled,
+        'ng-change': attrs.ngChange
+      }, function (value, name) {
+        if (angular.isDefined(value)) {
+          input.attr(name, value);
+        }
+      });
 
       function formatDate() {
         scope.ngModel = rome_instance.getDateString();
