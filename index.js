@@ -131,6 +131,7 @@ rome_module.directive('rome', function romeDirective(romeDefaults) {
         'ng-change': attrs.ngChange
       }, function (value, name) {
         if (angular.isDefined(value)) {
+          el.removeAttr(name);
           input.attr(name, value);
         }
       });
