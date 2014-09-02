@@ -1,6 +1,6 @@
 {
   "name": "angular-rome",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "An Angular directive for Rome, a dependency free datepicker",
   "main": "index.js",
   "scripts": {
