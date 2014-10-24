@@ -102,6 +102,7 @@ rome_module.directive('rome', function romeDirective(romeDefaults) {
         weekStart: attrs.romeWeekStart,
         monthsInCalendar: attrs.romeMonthsInCalendar,
         min: attrs.romeMin,
+        max: attrs.romeMax,
         inputFormat: attrs.romeInputFormat,
         timeInterval: attrs.romeTimeInterval
       });
