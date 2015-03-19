@@ -83,7 +83,7 @@ rome_module.directive('rome', function romeDirective(romeDefaults) {
     require: '^ngModel',
     template: '<div class="rome-container">' +
       '<span class="rome-view">{{formattedValue}}</span><input type="text" ng-transclude class="rome-input"></div>',
-    link: function (scope, el, attrs, ngModel) {
+    link: function (scope, el, attrs) {
       var rome_instance;
       var input = el.find('input');
 
