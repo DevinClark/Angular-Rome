@@ -16,7 +16,7 @@ rome_module.provider('romeDefaults', function romeDefaultsProvider() {
   }
 });
 
-rome_module.directive('rome', function romeDirective(romeDefaults) {
+rome_module.directive('rome', function romeDirective(romeDefaults, $interval) {
   "use strict";
 
   function stringToBool(str) {
@@ -63,17 +63,6 @@ rome_module.directive('rome', function romeDirective(romeDefaults) {
     }
   }
 
-  // http://stackoverflow.com/a/2956980
-  function setIntervalX(callback, delay, repetitions) {
-    var x = 0;
-    var intervalID = window.setInterval(function () {
-      callback();
-      if (++x === repetitions) {
-        window.clearInterval(intervalID);
-      }
-    }, delay);
-  }
-
   return {
     restrict: 'AE',
     transclude: 'attributes',
@@ -113,7 +102,7 @@ rome_module.directive('rome', function romeDirective(romeDefaults) {
       rome_instance = rome(input[0], config);
 
       // Hack to ensure all other rome directives are loaded so range validation will find a matching element.
-      setIntervalX(function () {
+      $interval(function () {
         rangeValidation(attrs, config);
       }, 100, 2);
 
