@@ -8,11 +8,6 @@ An Angular directive wrapping [Rome](http://bevacqua.github.io/rome/).
 ```
 npm i angular-rome --save
 ```
-### bower
-
-```
-npm uninstall bower -g && npm i angular-rome --save
-```
 
 Then inject it into your Angular module.
 ```js
