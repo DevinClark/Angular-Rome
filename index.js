@@ -67,7 +67,8 @@ rome_module.directive('rome', function romeDirective(romeDefaults, $interval) {
     restrict: 'AE',
     transclude: 'attributes',
     scope: {
-      ngModel: '='
+      ngModel: '=',
+      ngChange: '=?'
     },
     require: '^ngModel',
     template: '<div class="rome-container">' +
@@ -119,7 +120,8 @@ rome_module.directive('rome', function romeDirective(romeDefaults, $interval) {
         'novalidate': attrs.novalidate,
         'ng-value': attrs.ngValue,
         'ng-disabled': attrs.ngDisabled,
-        'ng-change': attrs.ngChange
+        'ng-change': attrs.ngChange,
+        'ng-model': attrs.ngModel
       }, function (value, name) {
         if (angular.isDefined(value)) {
           el.removeAttr(name);
