@@ -33,13 +33,14 @@ rome_module.directive('rome', function romeDirective(romeDefaults, $interval) {
       var has_id = romeValidator.indexOf('#') === 0;
       var matched_element;
       var search_attr;
-      var rome_elements = document.getElementsByTagName('rome');
+      var rome_elements = angular.element(document.getElementsByTagName('rome')).find('input');
+      var search_element;
       if (has_id) {
-        matched_element = angular.element(document.getElementById(romeValidator.substr(1))).find('input');
+        matched_element = angular.element(document.getElementById(romeValidator.substr(1)));
       } else {
         for (var i = 0; i < rome_elements.length; i++) {
           if (rome_elements[i].getAttribute('ng-model') == romeValidator) {
-            matched_element = angular.element(rome_elements[i]).find('input');
+            matched_element = angular.element(rome_elements[i]);
             break;
           }
         }
