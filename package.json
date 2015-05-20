@@ -16,7 +16,7 @@
   "license": "Apache License 2.0",
   "dependencies": {
     "lodash.merge": "^2.4.1",
-    "moment": "2.9.x",
+    "moment": "2.10.x",
     "rome": "2.1.x"
   },
   "devDependencies": {
