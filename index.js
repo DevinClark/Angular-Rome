@@ -16,7 +16,7 @@ rome_module.provider('romeDefaults', function romeDefaultsProvider() {
   }
 });
 
-rome_module.directive('rome', function romeDirective(romeDefaults, $interval) {
+rome_module.directive('rome', ['romeDefaults', '$interval', function romeDirective(romeDefaults, $interval) {
   "use strict";
 
   function stringToBool(str) {
@@ -157,6 +157,6 @@ rome_module.directive('rome', function romeDirective(romeDefaults, $interval) {
       }, true);
     }
   };
-});
+}]);
 
 module.exports = rome_module;
