@@ -12,7 +12,7 @@
     "directive",
     "rome"
   ],
-  "author": "Devin Clark <dclark@wdtinc.com> (http://devin-clark.com)",
+  "author": "Devin Clark <npm@devinenergy.com> (http://devin-clark.com)",
   "license": "Apache License 2.0",
   "dependencies": {
     "lodash.merge": "^2.4.1",
